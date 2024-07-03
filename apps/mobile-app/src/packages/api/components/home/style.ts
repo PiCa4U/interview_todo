@@ -1,8 +1,18 @@
 import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
-  container: {
+  root: {
     flex: 1,
-    padding: 20,
+  },
+  content:{
+    paddingTop:100,
+    paddingHorizontal:10,
+    gap:10,
+  },
+  plus:{
+    flex:0.3,
+    justifyContent:'center',
+    alignItems: 'center',
+
   }
 })
