@@ -41,11 +41,10 @@ export const Item:FC<props> =({title,id, completed})=>{
 
   return(
     <View style={styles.root}>
-      <Modal  visible={changeModal}>
+      <Modal visible={changeModal}>
         <ChangeModal text={titleText} onChange={onChange} clean={clean} setText={setTitleText} title={title}/>
       </Modal>
       <TouchableOpacity onPress={onComplete} style={!completed?{width:32, height:32, borderRadius:32,borderWidth:3}:{width:32, height:32, borderRadius:32,borderWidth:3, backgroundColor:'black'}}>
-
       </TouchableOpacity>
       <TouchableOpacity onPress={()=>setChangeModal(!changeModal)}>
         <Text style={[styles.text, completed && {textDecorationStyle: 'solid'}]}>{title}</Text>

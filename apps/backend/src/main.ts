@@ -1,12 +1,15 @@
 import express from 'express';
 import { PrismaClient } from '@prisma/client';
 import dotenv from 'dotenv';
+import cors from 'cors';
+
 
 dotenv.config();
 
 const prisma = new PrismaClient();
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 const host = process.env.HOST ?? 'localhost';
 const port = process.env.PORT ? Number(process.env.PORT) : 3000;
@@ -51,13 +54,8 @@ app.put('/todos/:id', async (req, res) => {
 
     const { completed, title } = req.body
 
-    console.log(id)
-    console.log(completed)
-    console.log(title)
     if(!id || typeof completed !== 'boolean' || title?.length === 0){
       console.log('error')
-      console.log(typeof completed !== 'boolean')
-      console.log( title?.length !== 0)
       res.status(400).json({ error: 'Data is required.' });
       return;
     }
