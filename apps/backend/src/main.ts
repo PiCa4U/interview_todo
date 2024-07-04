@@ -27,9 +27,12 @@ app.get('/todos', async (req, res) => {
 app.post('/todos', async (req, res) => {
   try {
     const { title } = req.body;
+    console.log(title);
 
-    if(!title){
+    if(!title || title?.length === 0){
+      console.log('error')
       res.status(400).json({ error: 'Title is required.' });
+      return;
     }
 
     const newTodo = await prisma.todo.create({
@@ -44,15 +47,18 @@ app.post('/todos', async (req, res) => {
 app.put('/todos/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const { completed } = req.body;
 
-    if(!id || typeof completed !== 'boolean'){
+    const {title} = req.body;
+
+    console.log(id)
+    console.log(title)
+    if(!id || title?.length === 0){
       res.status(400).json({ error: 'Data is required.' });
+      return;
     }
-
     const updatedTodo = await prisma.todo.update({
-      where: { id },
-      data: { completed },
+      where: {id},
+      data: {title},
     });
     res.json(updatedTodo);
   } catch (error) {
@@ -65,12 +71,11 @@ app.delete('/todos/:id', async (req, res) => {
     const { id } = req.params;
     if(!id){
       res.status(400).json({ error: 'No id like that.' });
+      return;
     }
-
     await prisma.todo.delete({
       where: { id },
     });
-
     res.sendStatus(204);
   } catch (error) {
     res.status(500).json({ error: 'An error occurred while deleting the todo.' });

@@ -1,16 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { Todo } from '@prisma/client';
+import { NewTodo } from '../models/services';
 
-interface Todo {
-  id: string;
-  title: string;
-  completed: boolean;
-  createdAt: string;
-}
-
-interface NewTodo {
-  title: string;
-  completed?: boolean;
-}
 
 export const todoApi = createApi({
   reducerPath: 'todoApi',
@@ -22,10 +13,7 @@ export const todoApi = createApi({
         url:'/todos',
         method: 'GET'
       }),
-      providesTags: (result) =>
-        result
-          ? [...result.map(({ id }) => ({ type: 'Todo' as const, id })), { type: 'Todo', id: 'LIST' }]
-          : [{ type: 'Todo', id: 'LIST' }],
+      providesTags: ['Todo'],
 
     }),
     addTodo: builder.mutation<Todo, Partial<NewTodo>>({
@@ -34,22 +22,22 @@ export const todoApi = createApi({
         method: 'POST',
         body: todo,
       }),
-      invalidatesTags: [{ type: 'Todo', id: 'LIST' }],
+      invalidatesTags: ['Todo'],
     }),
     updateTodo: builder.mutation({
-      query: ({ id, ...data }) => ({
+      query: ({ id, title }) => ({
         url: `/todos/${id}`,
         method: 'PUT',
-        body: data,
+        body: {title},
       }),
-      invalidatesTags: [{ type: 'Todo', id: 'LIST' }],
+      invalidatesTags: ['Todo'],
     }),
     deleteTodo: builder.mutation({
       query: (id) => ({
         url: `/todos/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: [{ type: 'Todo', id: 'LIST' }],
+      invalidatesTags: ['Todo'],
     }),
   }),
 })
