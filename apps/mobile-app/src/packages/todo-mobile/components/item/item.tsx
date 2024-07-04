@@ -2,7 +2,7 @@ import { Modal, Text, TouchableOpacity, View } from 'react-native';
 import { FC, useCallback, useState } from 'react';
 import { styles } from './style';
 import { DeleteIcon } from '../../icons/delete';
-import { useDeleteTodoMutation, useUpdateTodoMutation } from '../../../api/services';
+import { useDeleteTodoMutation, useUpdateTodoMutation } from '@interview-todo/frontend_rtk_query';
 import { ChangeModal } from '../changeModal/changeModal';
 
 type props={
@@ -36,8 +36,6 @@ export const Item:FC<props> =({title,id, completed})=>{
     setTitleText('')
     return
   }
-
-  console.log(completed)
 
   return(
     <View style={styles.root}>

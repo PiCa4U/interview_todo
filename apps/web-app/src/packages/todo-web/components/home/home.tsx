@@ -1,10 +1,9 @@
-import { useGetTodosQuery } from '../../../api/services';
 import classes from './home.module.css'
 import { Button, Input, List, Modal } from 'antd';
 import { TodoItem } from '../todoItem/todoItem';
 import { PlusCircleOutlined } from '@ant-design/icons';
 import { useCallback, useState } from 'react';
-import { useAddTodoMutation } from '../../../../../../mobile-app/src/packages/api/services';
+import { useAddTodoMutation, useGetTodosQuery } from '@interview-todo/frontend_rtk_query';
 
 export const Home = () => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);

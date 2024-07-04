@@ -1,7 +1,7 @@
 import { FC, useCallback, useEffect, useState } from 'react';
 import classes from './todo.module.css'
 import { DeleteOutlined } from '@ant-design/icons';
-import { useDeleteTodoMutation, useUpdateTodoMutation } from '../../../../../../mobile-app/src/packages/api/services';
+import { useDeleteTodoMutation, useUpdateTodoMutation } from '@interview-todo/frontend_rtk_query';
 import { Button, Input, Modal } from 'antd';
 import { Pressable } from 'react-native';
 

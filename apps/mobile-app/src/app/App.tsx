@@ -1,8 +1,7 @@
 import React from 'react';
-import {View} from 'react-native';
 import { Provider } from 'react-redux';
-import { store } from '../packages/api/services/store';
 import { Home } from '../packages/todo-mobile/components/home/home';
+import { store }  from '@interview-todo/frontend_rtk_query';
 
 export const App = () => {
   return (
