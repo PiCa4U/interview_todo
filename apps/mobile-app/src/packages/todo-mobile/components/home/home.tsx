@@ -25,8 +25,6 @@ export const Home = () => {
     return
   }
 
-  console.log(data)
-
   return(
     <View style={styles.root}>
       <Modal visible={addModal} animationType="slide">
@@ -36,7 +34,7 @@ export const Home = () => {
         style={styles.root}
         contentContainerStyle={styles.content}
         data={data}
-        renderItem={item => <Item title={item.item.title} id={item.item.id}/>}
+        renderItem={item => <Item title={item.item.title} id={item.item.id} completed={item.item.completed}/>}
       />
       <TouchableOpacity style={styles.plus} onPress={() => setAddModal(!addModal)}>
         <PlusIcon/>

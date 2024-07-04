@@ -34,6 +34,7 @@ app.post('/todos', async (req, res) => {
       res.status(400).json({ error: 'Title is required.' });
       return;
     }
+    console.log('wtf')
 
     const newTodo = await prisma.todo.create({
       data: { title },
@@ -48,17 +49,24 @@ app.put('/todos/:id', async (req, res) => {
   try {
     const { id } = req.params;
 
-    const {title} = req.body;
+    const { completed, title } = req.body
 
     console.log(id)
+    console.log(completed)
     console.log(title)
-    if(!id || title?.length === 0){
+    if(!id || typeof completed !== 'boolean' || title?.length === 0){
+      console.log('error')
+      console.log(typeof completed !== 'boolean')
+      console.log( title?.length !== 0)
       res.status(400).json({ error: 'Data is required.' });
       return;
     }
+
+    console.log('ok')
+
     const updatedTodo = await prisma.todo.update({
-      where: {id},
-      data: {title},
+      where: { id },
+      data: { completed, title },
     });
     res.json(updatedTodo);
   } catch (error) {

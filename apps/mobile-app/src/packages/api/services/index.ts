@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { Todo } from '@prisma/client';
-import { NewTodo } from '../models/services';
+import { NewTodo,Todo } from '../models/services';
 
 
 export const todoApi = createApi({
@@ -16,7 +15,7 @@ export const todoApi = createApi({
       providesTags: ['Todo'],
 
     }),
-    addTodo: builder.mutation<Todo, Partial<NewTodo>>({
+    addTodo: builder.mutation<Todo,  Pick<Todo, 'title'>>({
       query: (todo) => ({
         url: '/todos',
         method: 'POST',
@@ -24,15 +23,15 @@ export const todoApi = createApi({
       }),
       invalidatesTags: ['Todo'],
     }),
-    updateTodo: builder.mutation({
-      query: ({ id, title }) => ({
+    updateTodo: builder.mutation<void, Omit<Todo, 'createdAt'>>({
+      query: ({ id, title, completed }) => ({
         url: `/todos/${id}`,
         method: 'PUT',
-        body: {title},
+        body: {title , completed},
       }),
       invalidatesTags: ['Todo'],
     }),
-    deleteTodo: builder.mutation({
+    deleteTodo: builder.mutation<void, string>({
       query: (id) => ({
         url: `/todos/${id}`,
         method: 'DELETE',
