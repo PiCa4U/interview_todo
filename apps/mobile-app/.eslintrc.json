@@ -1,18 +1,28 @@
 {
   "extends": ["plugin:@nx/react", "../../.eslintrc.json"],
-  "ignorePatterns": ["!**/*", ".expo", "web-build", "cache", "dist"],
+  "ignorePatterns": ["!**/*", ".expo/**", "web-build/**", "cache/**", "dist/**", "node_modules/**"],
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
-      "rules": {}
+      "rules": {
+        "react/react-in-jsx-scope": "off",
+        "react/jsx-filename-extension": [1, { "extensions": [".tsx", ".jsx"] }],
+        "@typescript-eslint/explicit-module-boundary-types": "off"
+      }
     },
     {
       "files": ["*.ts", "*.tsx"],
-      "rules": {}
+      "rules": {
+        "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+        "@typescript-eslint/no-explicit-any": "off"
+      }
     },
     {
       "files": ["*.js", "*.jsx"],
-      "rules": {}
+      "rules": {
+        "no-unused-vars": ["error", { "varsIgnorePattern": "^_" }],
+        "no-console": "warn"
+      }
     }
   ]
 }

@@ -2,7 +2,7 @@ import classes from './home.module.css'
 import { Button, Input, List, Modal } from 'antd';
 import { TodoItem } from '../todoItem/todoItem';
 import { PlusCircleOutlined } from '@ant-design/icons';
-import { useCallback, useState } from 'react';
+import { ChangeEvent, useCallback, useState } from 'react';
 import { useAddTodoMutation, useGetTodosQuery } from '@interview-todo/frontend_rtk_query';
 
 export const Home = () => {
@@ -11,23 +11,29 @@ export const Home = () => {
   const {data} = useGetTodosQuery()
   const [add ] = useAddTodoMutation()
 
-  const onCancel=()=>{
-    setModalVisible(!modalVisible);
-    return
-  }
+  const onCancel= useCallback(()=>{
+    setModalVisible(false);
+    return;
+  },[])
+
+
 
   const onSubmit = useCallback(async ()=>{
     await add({title:text})
-    setModalVisible(!modalVisible)
+    setModalVisible(false)
     setText('')
-  },[text])
+  },[text, add])
+
+  const openModal = useCallback(()=>setModalVisible(true),[])
+
+  const onChangeText = useCallback((e: ChangeEvent<HTMLInputElement>)=>setText(e.target.value),[])
 
   return(
     <main className={classes.container}>
       <List style={{ width:'100%'}}>
-        {data?.map(item=> <TodoItem title={item.title} id={item.id} completed={item.completed}/>)}
+        {data?.map(item=> <TodoItem title={item.title} id={item.id} completed={item.completed} key={item.id}/>)}
       </List>
-      <PlusCircleOutlined style={{fontSize:80}} onClick={()=>setModalVisible(!modalVisible)}/>
+      <PlusCircleOutlined style={{fontSize:80}} onClick={openModal}/>
       <Modal
         title={'Add some'}
         open={modalVisible}
@@ -40,7 +46,7 @@ export const Home = () => {
           </Button>
         ]}
       >
-        <Input placeholder={'Write here...'} value={text} onChange={(e)=>setText(e.target.value)}/>
+        <Input placeholder={'Write here...'} value={text} onChange={onChangeText}/>
       </Modal>
     </main>
   )

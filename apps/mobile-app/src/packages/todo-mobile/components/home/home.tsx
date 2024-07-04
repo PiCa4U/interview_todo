@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
-import { FlatList, Modal, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { useAddTodoMutation, useDeleteTodoMutation, useGetTodosQuery, useUpdateTodoMutation } from '@interview-todo/frontend_rtk_query';
+import { FlatList, Modal, TouchableOpacity, View } from 'react-native';
+import { useAddTodoMutation, useGetTodosQuery } from '@interview-todo/frontend_rtk_query';
 import { Item } from '../item/item';
 import { styles } from './style';
 import { PlusIcon } from '../../icons/plusIcon';

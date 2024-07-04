@@ -3,7 +3,6 @@ import classes from './todo.module.css'
 import { DeleteOutlined } from '@ant-design/icons';
 import { useDeleteTodoMutation, useUpdateTodoMutation } from '@interview-todo/frontend_rtk_query';
 import { Button, Input, Modal } from 'antd';
-import { Pressable } from 'react-native';
 
 type props={
   title:string;
@@ -20,18 +19,16 @@ export const TodoItem:FC<props>=({title,id,completed})=>{
 
   useEffect(() => {
     setTitleText(title)
-  }, []);
+  }, [title]);
 
   const onDelete = useCallback(async ()=>{
     await remove(id)
-    console.log(id)
-  },[])
+  },[remove, id])
 
-  const onCancel =()=>{
-    setChangeModal(!changeModal)
+  const onCancel = useCallback(()=>{
+    setChangeModal(false)
     setTitleText('')
-    return
-  }
+  },[])
 
   const onChange= useCallback( async ()=>{
     await change({id:id,title:titleText, completed:completed})
@@ -40,7 +37,7 @@ export const TodoItem:FC<props>=({title,id,completed})=>{
 
   const onComplete = useCallback( async ()=>{
     await change({id:id,title, completed:!completed})
-  },[titleText,completed])
+  },[titleText,completed, change])
 
 
   return(

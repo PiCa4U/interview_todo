@@ -25,11 +25,11 @@ export const Item:FC<props> =({title,id, completed})=>{
   const onChange= useCallback( async ()=>{
     await change({id:id,title:titleText, completed:completed})
     setChangeModal(!changeModal)
-  },[titleText,completed])
+  },[titleText,completed,id])
 
   const onComplete = useCallback( async ()=>{
     await change({id:id,title, completed:!completed})
-  },[titleText,completed])
+  },[titleText,completed,id])
 
   const clean =()=>{
     setChangeModal(!changeModal)

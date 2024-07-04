@@ -13,6 +13,7 @@
   },
   "scripts": {
     "eas-build-pre-install": "cd ../../ && node tools/scripts/eas-build-pre-install.mjs . apps/mobile-app && cp package-lock.json apps/mobile-app",
-    "eas-build-post-install": "cd ../../ && node tools/scripts/eas-build-post-install.mjs . apps/mobile-app"
+    "eas-build-post-install": "cd ../../ && node tools/scripts/eas-build-post-install.mjs . apps/mobile-app",
+    "lint": "eslint src/ --ext .js,.jsx,.ts,.tsx --fix"
   }
 }
