@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { NewTodo,Todo } from '../models/services';
+import { Todo } from '../models/services';
 
 
 export const todoApi = createApi({
@@ -27,9 +27,25 @@ export const todoApi = createApi({
       query: ({ id, title, completed }) => ({
         url: `/todos/${id}`,
         method: 'PUT',
-        body: {title , completed},
+        body: { title, completed },
       }),
       invalidatesTags: ['Todo'],
+      onQueryStarted: async (args, { dispatch, queryFulfilled }) => {
+        const patchResult = dispatch(
+          todoApi.util.updateQueryData('getTodos', undefined, draft => {
+            const todo = draft.find(todo => todo.id === args.id);
+            if (todo) {
+              todo.title = args.title;
+              todo.completed = args.completed;
+            }
+          })
+        );
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          patchResult.undo();
+        }
+      }
     }),
     deleteTodo: builder.mutation<void, string>({
       query: (id) => ({
